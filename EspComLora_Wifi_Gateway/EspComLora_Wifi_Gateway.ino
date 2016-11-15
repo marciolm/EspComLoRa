@@ -29,16 +29,16 @@
 #define SX1272_debug_mode 2
 #define RADIO_RFM92_95
 #define BAND900
-String apiKey = "thingspeak-Key";
-const char* ssid = "SSID";
-const char* password = "Password";
+String apiKey = "thingspeak_api_key";
+const char* ssid = "ssid";
+const char* password = "password";
 const char* server = "api.thingspeak.com";
 int e;
 char my_packet[100];
 int led = 2 ;
 boolean led_state = LOW;
 WiFiClient client;
-
+String my_packet_str;
 void setup()
 {
   int nCnt = 0;
@@ -116,6 +116,16 @@ void loop(void)
     {
       my_packet[i] = (char)sx1272.packet_received.data[i];
     }
+    my_packet_str = String(my_packet);
+    int Index1 = my_packet_str.indexOf('#');
+    int Index2 = my_packet_str.indexOf('#', Index1+1);
+    int Index3 = my_packet_str.indexOf('#', Index2+1);
+
+    String secondValue = my_packet_str.substring(Index1+1, Index2);
+    String thirdValue = my_packet_str.substring(Index2+1, Index3);
+
+    Serial.println(secondValue);
+    Serial.println(thirdValue);  
     Serial.print(F("Message: "));
     Serial.println(my_packet);
     led_state = !led_state ;
@@ -126,15 +136,28 @@ void loop(void)
 
     if (client.connect(server,80)) {  //   "184.106.153.149" or api.thingspeak.com
     String postStr = apiKey;
+    if (secondValue == "2") {
            postStr +="&field1=";
            postStr += String(sx1272._RSSIpacket);
            postStr +="&field2=";
            postStr += String(sx1272._SNR);
+           postStr +="&field3=";
+           postStr += thirdValue;
            postStr += "\r\n\r\n";
+    }
+    if (secondValue == "4") {
+           postStr +="&field4=";
+           postStr += String(sx1272._RSSIpacket);
+           postStr +="&field5=";
+           postStr += String(sx1272._SNR);
+           postStr +="&field6=";
+           postStr += thirdValue;
+           postStr += "\r\n\r\n";
+    }
      client.print("POST /update HTTP/1.1\n"); 
      client.print("Host: api.thingspeak.com\n"); 
      client.print("Connection: close\n"); 
-     client.print("X-THINGSPEAKAPIKEY: "+apiKey+"\n"); 
+     client.print("X-THINGSPEAKAPIKEY: "+apiKey+"\n");
      client.print("Content-Type: application/x-www-form-urlencoded\n"); 
      client.print("Content-Length: "); 
      client.print(postStr.length()); 
