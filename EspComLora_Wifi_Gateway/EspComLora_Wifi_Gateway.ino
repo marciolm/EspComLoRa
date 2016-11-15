@@ -20,6 +20,9 @@
  *  Version:           1.1
  *  Design:            David Gascón 
  *  Implementation:    Covadonga Albiñana & Victor Boria
+ * ****************************************************************************
+ * Adapted for ESP8266 modules by Marcio Miguel - marcio.miguel@gmail.com
+ * ****************************************************************************
  */
 
 // Include the SX1272 and SPI library:

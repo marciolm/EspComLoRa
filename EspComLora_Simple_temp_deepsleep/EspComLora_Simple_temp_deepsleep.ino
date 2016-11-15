@@ -17,6 +17,8 @@
  *  along with the program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *****************************************************************************
+ * Adapted for ESP8266 modules by Marcio Miguel - marcio.miguel@gmail.com
+ *****************************************************************************
  */
 #include <SPI.h> 
 // Include the SX1272
@@ -91,9 +93,6 @@ uint8_t my_appKey[4]={5, 6, 7, 8};
 #define PRINT_VALUE(fmt,param)    Serial.print(param)
 #define FLUSHOUTPUT               Serial.flush();
 
-
-
-
 #define DEFAULT_DEST_ADDR 1
 
 #ifdef WITH_ACK
@@ -146,7 +145,7 @@ Serial.begin(9600);
   // Power ON the module
   sx1272.ON();
 
-  EEPROM.begin(512);
+  EEPROM.begin(512);   // needed for ESP8266
   EEPROM.get(0, my_sx1272config);
 
   // found a valid config?
@@ -300,7 +299,6 @@ void loop(void)
 #endif         
 #endif
 
-
       PRINT_CSTSTR("%s","Sending ");
       PRINT_STR("%s",(char*)(message+app_key_offset));
       PRINTLN;
@@ -386,10 +384,9 @@ void loop(void)
       FLUSHOUTPUT
       delay(50);
 
-      // use a random part also to avoid collision
       PRINT_CSTSTR("%s","Entering ESP Deep Sleep");
       PRINTLN;
-      ESP.deepSleep(600000000);
+      ESP.deepSleep(600000000);   // 600 seconds
       
   #else
       // use a random part also to avoid collision

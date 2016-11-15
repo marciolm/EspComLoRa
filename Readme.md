@@ -1,4 +1,4 @@
-#Ultra Low Cost LoRa Gateway with ESP8266 modules
+#Ultra Low Cost LoRa Gateway with ESP8266 module
 =================================================
 
 This project was based on the work of professor Congduc Pham's "Low Cost LoRa Gateway" project, available in https://github.com/CongducPham/LowCostLoRaGw
