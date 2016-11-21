@@ -3,7 +3,7 @@
 
 This project was based on the work of professor Congduc Pham's "Low Cost LoRa Gateway" project, available in https://github.com/CongducPham/LowCostLoRaGw
 
-It uses low cost (US$2) ESP8266 ESP-12 and LoRa modules with the chip Semtech SX1272 or HOPERF's RFM95W modules (about US$8). The same modules are used for both sensor nodes and the gateway, but in the sensor nodes the WiFi support is disabled to lower the power consumption to less than 250 microamperes.
+It uses low cost (US$2) ESP8266 ESP-12 and LoRa modules with the chip Semtech SX1276 or HOPERF's RFM95W modules (about US$8). The same modules are used for both sensor nodes and the gateway, but in the sensor nodes the WiFi support is disabled to lower the power consumption to less than 250 microamperes.
 
 Arduino modules, like Pros (3.3V), can still be used on sensor nodes.
 
